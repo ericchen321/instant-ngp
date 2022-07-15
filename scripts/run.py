@@ -56,6 +56,8 @@ def parse_args():
 
 	parser.add_argument("--sharpen", default=0, help="Set amount of sharpening applied to NeRF training images.")
 
+	# Eric: allow images to be saved
+	parser.add_argument("--test_image", action="store_true", help="Save the reconstructed 2D image")
 
 	args = parser.parse_args()
 	return args
@@ -111,6 +113,7 @@ if __name__ == "__main__":
 		scene = args.scene
 		if not os.path.exists(args.scene) and args.scene in scenes:
 			scene = os.path.join(scenes[args.scene]["data_dir"], scenes[args.scene]["dataset"])
+		print(scene)
 		testbed.load_training_data(scene)
 
 
@@ -205,6 +208,11 @@ if __name__ == "__main__":
 		print("Saving snapshot ", args.save_snapshot)
 		testbed.save_snapshot(args.save_snapshot, False)
 
+	if args.test_image:
+		ref_image = read_image(args.scene)
+		image = testbed.render(ref_image.shape[1], ref_image.shape[0], 1, True)
+		write_image("out.png", image)
+	
 	if args.test_transforms:
 		print("Evaluating test transforms from ", args.test_transforms)
 		with open(args.test_transforms) as f:
