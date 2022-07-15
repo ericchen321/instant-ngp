@@ -14,4 +14,6 @@ __pycache__
 .DS_Store
 imgui.ini
 data/nerf/nerf_synthetic
+data/nerf/nerf_llff_data
+data/image/ours
 workspace
