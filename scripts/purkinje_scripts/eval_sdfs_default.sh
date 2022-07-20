@@ -1,6 +1,7 @@
 #!/bin/bash
 
-resolution="$1"
+logging_subdir="$1"
+resolution="$2"
 
 shape_names=(
     "airplane"
@@ -25,5 +26,5 @@ shape_names=(
 )
 
 for shape_name in ${shape_names[@]}; do
-    source scripts/train_sdf.sh $shape_name default $resolution
+    source scripts/eval_sdf.sh $shape_name default $logging_subdir $resolution
 done
